@@ -1,0 +1,21 @@
+\begin{thebibliography}{1}
+
+\bibitem{Setun}
+G.D.Frolov N.A.Krinitsky, G.A.Mironov.
+\newblock {\em Program-controlled machine Setun}, chapter~10.
+\newblock 1963.
+
+\bibitem{shinjin}
+Shinji Takesue.
+\newblock {\em Journal of Statistical Physics,}, 56, 1989.
+
+\bibitem{VICHNIAC198496}
+Gérard~Y. Vichniac.
+\newblock Simulating physics with cellular automata.
+\newblock {\em Physica D: Nonlinear Phenomena}, 10(1):96--116, 1984.
+
+\bibitem{wolfram}
+Stephen Wolfram.
+\newblock {\em Rev. Mod. Phys}, 55(3), 1983.
+
+\end{thebibliography}
