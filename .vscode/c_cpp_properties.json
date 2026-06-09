@@ -10,7 +10,8 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "F:\\Dev-Cpp\\MinGW64\\bin\\g++.exe"
+            "compilerPath": "D:\\msys64\\ucrt64\\bin\\g++.exe",
+            "intelliSenseMode": "windows-gcc-x64"
         }
     ],
     "version": 4
