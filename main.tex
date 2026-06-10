@@ -6,6 +6,8 @@
 \usepackage{bm}
 \usepackage{xeCJK} % 核心：使用现代中文字体包，配合 XeLaTeX 引擎一键完美编译
 \usepackage{microtype}
+\usepackage{amsthm}
+\usepackage{amsmath}
 \bibliographystyle{plain}
 
 \begin{document}
@@ -153,7 +155,7 @@ r_i^{t+1} = \sigma_i^t
 
 \begin{figure}[htbp]
 \centering
- \includegraphics[width=0.5\textwidth]{image/3XORS.png} % 请在此处放置平衡三进制的三种运算规则图片
+\includegraphics[width=0.5\textwidth]{image/3XORS.png} % 请在此处放置平衡三进制的三种运算规则图片
 \caption{\label{fig:ternary_operators} 可用作平衡三进制 ERCA 的三种 $\otimes$ 运算规则。}
 \end{figure}
 
@@ -161,21 +163,75 @@ r_i^{t+1} = \sigma_i^t
 
 \subsection{对称性}
 
-很显然，三元 ERCA 可能的规则数目和二元相比是远远多的。鉴于 $f(\sigma_{i-1}^t, \sigma_{i}^t, \sigma_{i+1}^t)$ 有三种可能取值和三个具有三种取值的自变量，那么一共应有 $3^{3^3} = 3^{27} \approx 7 \times 10^{12}$ 种不同的规则。这是一个非常大的数目，较难以沿用研究二元 ERCA 的方法，对每个规则进行遍历研究。我们也可以用类似的办法给这些规则进行编号，即：
+很显然，三元 ERCA 可能的规则数目和二元相比是远远多的。鉴于 $f(\sigma_{i-1}^t, \sigma_{i}^t, \sigma_{i+1}^t)$ 有三种可能取值和三个具有三种取值的自变量，那么一共应有 $3^{3^3} = 3^{27} \approx 7 \times 10^{12}$ 种不同的规则。这是一个非常大的数目，较难以沿用研究二元 ERCA 的方法，对每个规则进行遍历研究。
+我们尝试使用类似的方法对三元ERCA的对称性进行分析。在以下的运算中，我们将简记：
+\begin{equation}f(\sigma_{i-1}^t, \sigma_{i}^t, \sigma_{i+1}^t) = f(\mu, \nu, \kappa)\end{equation}
+
+为之后讨论做铺垫，我们将首先介绍一下群相关的定义\cite{group}：
+
+设 $G$ 是一些元素（操作）的集合，记为 $G = \{\cdots, g, \cdots\}$，在 $G$ 中定义了乘运算，如果 $G$ 中元素对这种运算满足下面四个条件：
+\begin{enumerate}
+    \item \textbf{封闭性}：$\forall$ 两个元素（操作）的乘积仍属于这类元素（操作）的集合；
+    \item \textbf{结合律}：对 $\forall$ 三个元素（操作）$f, g, h$，有 $(fg)h = f(gh)$；
+    \item \textbf{单位元}：有唯一单位元素 $e$，使得对 $\forall f \in G$，有 $ef = fe = f$；
+    \item \textbf{逆元}：对 $\forall f \in G$，存在且唯一存在 $f^{-1} \in G$，使 $f^{-1}f = ff^{-1} = e$。
+\end{enumerate}
+则称 $G$ 为一个\textbf{群}。
+
+\textbf{子群}：设 $G$ 是一个群，$H$ 是 $G$ 的一个子集，如果 $H$ 中的元素在 $G$ 中的乘法运算下也构成一个群，则称 $H$ 是 $G$ 的一个\textbf{子群}。
+
+基于上方已经构建出来的可逆运算，三元ERCA构成了一个对称操作群:$G = S_3 \times Z_2$。其中，$S_3$ 群代表的是轮换操作：
+\begin{align}
+    e:f(\mu,\nu,\kappa) &\to f(\mu,\nu,\kappa) \nonumber \\
+    C^1 :f(\mu,\nu,\kappa) &\to f(\nu,\mu,\kappa) \nonumber \\
+    C^2 :f(\mu,\nu,\kappa) &\to f(\mu,\kappa,\nu) \nonumber \\
+    C^3 :f(\mu,\nu,\kappa) &\to f(\kappa,\nu,\mu) \nonumber \\
+    C^4 :f(\mu,\nu,\kappa) &\to f(\nu,\kappa,\mu) \nonumber \\
+    C^5 :f(\mu,\nu,\kappa) &\to f(\kappa,\mu,\nu) 
+\end{align}
+共有六种不同的轮换操作。而$Z_2$ 群代表的是状态变换操作：
+\begin{align}
+    e: f(\mu,\nu,\kappa) &\to f(\mu,\nu,\kappa) \nonumber \\
+    S: f(\mu,\nu,\kappa) &\to -f(-\mu, -\nu, -\kappa) 
+\end{align}
+有两种不同的状态操作。因此，三元 ERCA 的对称操作总共有 $6 \times 2 = 12$ 个。
+在这$12$个操作下，若$f$的对应关系不发生改变，那么我们就认为这些规则是等价的。
+这远多于二元 ERCA 的 $4$ 种操作。这样，每个等价类中最多也就可能有 $12$ 个成员。如何计算等价类的数目？在研究二元 ERCA 时，研究者可以计算所有 $256$ 个规则经三种对称操作后变为了哪种规则，并划分出所有的 $88$ 个等价类。但由于三元的规则数目太多，就无法遍历计算。我们需要发展一种组合数学的方法，从而不需要考察每一个规则就能计算出等价类的数目。
+
+在具体分析实际操作下规则的等价关系之前，我们先来分析一下这些操作的代数结构。首先，轮换操作 $S_3$ 群是非阿贝尔群，状态变换操作 $Z_2$ 群是阿贝尔群。两者的乘积群 $G$ 也是非阿贝尔群。
+这指引我们去分析三元ERCA的$G$群各个子群，从而分析这些子群变换下的等价类。
+\begin{enumerate}
+    \item 一阶子群：$H_1 = (e)$. 该子群只有一个元素，即恒等操作。对于任何规则 $f$，我们都有 $ef = fe = f$，因此每个规则都在该子群下具有不变性。
+    \item 二阶子群：
+    \begin{equation*}
+        \begin{aligned}
+        H_2^{1(i)} &= \{e, C^i\}, \quad i = 1, 2, 3  \\
+        H_2^2 &= \{e, S\}  \\
+        H_2^{3(i)} &= \{e, SC^i\}, \quad i = 1, 2, 3 
+    \end{aligned}
+    \end{equation*}
+    其中 $H_2^{1(i)}$ 是三种轮换操作中的一种，$H_2^2$ 是状态变换操作，$H_2^{3(i)}$ 是状态变换和轮换的联合操作。
+    \item 三阶子群：$H_3 = \{e, C^4 , C^5\}$. 
+    \item 四阶子群：$H_4^{i} = \{e, S, C^i, SC^i\}, \quad i = 1, 2, 3$. 
+    \item 六阶子群：
+    \begin{equation*}
+        \begin{aligned}
+        H_6^1 &= \{e, C^1, C^2, C^3, C^4, C^5\}  \\
+        H_6^2 &= \{e, C^4, C^5, S, SC^4, SC^5\} \\
+        H_6^3 &= \{e, C^4, C^5, SC^1, SC^2, SC^3\}
+        \end{aligned}
+    \end{equation*}
+    其中 $H_6^1$ 是轮换操作的子群即$S_3$ ， 而$H_6^2$ 和 $H_6^3$ 是状态变换和轮换的联合操作。
+    \item 十二阶子群：$G = S_3 \times Z_2$. 该子群包含了所有的对称操作。
+\end{enumerate}
+如果我们认为每个规则 $f$ 都是一个 $3^3$ 维空间中的一个点，那么这些对称操作就相当于在这个空间中对这些点进行变换。对于某个规则 $f$，如果它在某个子群 $H$ 下具有不变性，那么我们就可以说这个规则在该子群下是对称的。对于一个规则 $f$，如果它在某个子群 $H$ 下具有不变性，那么它在该子群的所有元素下都具有不变性。因此，我们可以通过分析规则在不同子群下的对称性，来划分出不同的等价类。
+
+我们也可以用类似的办法给这些规则进行编号，即：
 \begin{equation}
 f\mathrm{R} = \sum_{\mu,\nu,\kappa} 3^{9\mu+3\nu+\kappa} f(\mu,\nu,\kappa) \, \mathrm{R}
 \end{equation}
 但是很显然很大一部分规则的编号将是极大的。
 
-对称操作的数量也相应增加了。ERCA 可能的对称操作，包括了空间反演和不同状态的变换，以及这两种操作的联合操作。显然三种状态之间的转换，总共有五种操作：
-\begin{align}
-(-1,0,1) &\to (1,0,-1) \nonumber \\
-(-1,0,1) &\to (-1,1,0) \nonumber \\
-(-1,0,1) &\to (0,-1,1) \nonumber \\
-(-1,0,1) &\to (0,1,-1) \nonumber \\
-(-1,0,1) &\to (1,-1,0) \nonumber
-\end{align}
-再加上空间反演和联合操作，则我们得出三元 ERCA 总共有 $11$ 种对称操作，远多于二元 ERCA 的 $3$ 种。这样，每个等价类中最多也就可能有 $12$ 个成员。如何计算等价类的数目？在研究二元 ERCA 时，研究者可以计算所有 $256$ 个规则经三种对称操作后变为了哪种规则，并划分出所有的 $88$ 个等价类。但由于三元的规则数目太多，就无法遍历计算。我们需要发展一种组合数学的方法，从而不需要考察每一个规则就能计算出等价类的数目。
 
 还是以二元 ERCA 为例。根据某一规则在对称操作下是否具有不变性，我们可以将其分为以下五类：
 \begin{itemize}
