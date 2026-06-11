@@ -56,7 +56,7 @@ int main(int argc, char* argv[]){
     printf("rule:\n");
     for(int i=1;i>=-1;i--){
         for(int j=1;j>=-1;j--){
-            for(int k=1;k>-1;k--){
+            for(int k=1;k>=-1;k--){
                 F(i,j,k)<0?printf("T"):printf("%d",F(i,j,k));
             }
         }
