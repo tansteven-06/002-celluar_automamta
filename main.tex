@@ -54,7 +54,11 @@ E(\sigma^t, \sigma^{t-1}) = \sum_{i=1}^{N} \left[ X(\sigma_{i-1}^t, \sigma_i^t, 
 为了使 $E$ 在随后的动力学流变中保持恒定不变（即满足 $E(\sigma^{t+1}, \sigma^t) = E(\sigma^t, \sigma^{t-1})$），将动力学演化方程（1）代入并移项展开，可推导出局域泛函 $X$ 与 $Y$ 必须无条件锁死在如下代数方程组中：
 
 \begin{equation}
-X(s_{-1}, s_0, s_1) + Y(s_0, f(s_{-1}, s_0, s_1) \oplus r_0) - X(s_0, f(s_{-1}, s_0, s_1) \oplus r_0, s_1') - Y(f(s_{-1}, s_0, s_1) \oplus r_0, s_0) = 0
+    \begin{aligned}
+        & X(s_{-1}, s_0, s_1) + Y(s_0, f(s_{-1}, s_0, s_1) \oplus r_0) \\
+        & - X(s_0, f(s_{-1}, s_0, s_1)  \oplus r_0, s_1') \\
+        & - Y(f(s_{-1}, s_0, s_1) \oplus r_0, s_0) = 0\\
+    \end{aligned}
 \end{equation}
 
 其中 $r_0$ 代表历史状态。原论文通过严谨的代数枚举表明，在这 88 个等价类中，只有一部分规则组存在非平凡的解。
@@ -232,7 +236,7 @@ r_i^{t+1} = \sigma_i^t
 \end{equation}
 设群$H$作用在集合$X$上，那么对于$\forall x \in X$，定义\textbf{轨道}是：
 \begin{equation}
-    \text{ORb}(x) = {h \cdot x | h \in H}
+    \text{Orb}(x) = {h \cdot x | h \in H}
 \end{equation}
 即从$X$出发，经过$H$中所有元素作用后能到达的所有点的集合。
 轨道即是等价类，所以 $X$可以被划分成若干个互不相交的轨道。
@@ -322,7 +326,7 @@ $N_1$其实对应的就是不存在任何对称性的规则数目。当然，在
 
 \subsection{还没有写的重要部分，16号我真的不知道写不写的完，简单记一下}
 \begin{itemize}
-    \item 我们放弃了Shinji Takesue对256个穷举的方式，转而使用约束矩阵$M_f s.t. M_f \cdot F = 0$，通过$SVD$算法可以知道$M_f$的零空间，从而解析的得到$F$的零空间维数。
+    \item 我们放弃了Shinji Takesue对256个穷举的方式，转而使用约束矩阵$M_f \, s.t. M_f \cdot F = 0$，通过$SVD$算法可以知道$M_f$的零空间，从而解析的得到$F$的零空间维数。
     \item $d=9$时，体系可以发生热化，不存在可加性守恒量。
     \item 所有具有三元轮换性的$f$均不满足热化条件，发生\textbf{可热化-热化相变}。
     \item $\otimes$的选取对$f$是否热化存在影响，但主要还是$f$的作用。
