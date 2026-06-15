@@ -317,6 +317,21 @@ $N_1$其实对应的就是不存在任何对称性的规则数目。当然，在
     \end{aligned}
 \end{equation}
 
+
+
+
+\subsection{还没有写的重要部分，16号我真的不知道写不写的完，简单记一下}
+\begin{itemize}
+    \item 我们放弃了Shinji Takesue对256个穷举的方式，转而使用约束矩阵$M_f s.t. M_f \cdot F = 0$，通过$SVD$算法可以知道$M_f$的零空间，从而解析的得到$F$的零空间维数。
+    \item $d=9$时，体系可以发生热化，不存在可加性守恒量。
+    \item 所有具有三元轮换性的$f$均不满足热化条件，发生\textbf{可热化-热化相变}。
+    \item $\otimes$的选取对$f$是否热化存在影响，但主要还是$f$的作用。
+    \item 用长轨道、关联振荡、扰动冻结判断热化。
+    \item 这种混沌不是由于Feigenbaum分岔，三元ERCA直接指向直接混沌。
+    \item 通过计算拟合出Lyapunov指数可能是强度量，导向三元ERCA可能是广延的时空混沌。
+    \item 关联衰减指数和轨道长度依赖于f的选取，属于微观结构部分。
+\end{itemize}
+
 \section{结论}
 
 本文基于 Shinji Takesue 的经典分析框架，探讨了确定性可逆元胞自动机（RCA）的相空间拓扑结构与动力学遍历特征。
