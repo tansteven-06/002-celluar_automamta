@@ -7,7 +7,9 @@
 \usepackage{xeCJK} % 核心：使用现代中文字体包，配合 XeLaTeX 引擎一键完美编译
 \usepackage{microtype}
 \usepackage{amsthm}
+\usepackage{booktabs}
 \usepackage{amsmath}
+\usepackage{float}
 \bibliographystyle{plain}
 
 \begin{document}
@@ -150,10 +152,11 @@ a_n a_{n-1} \dots a_2 a_1, \quad a_i = -1, 0, 1
 
 对于 ERCA 的规则表达式：
 \begin{equation}
-\sigma_i^{t+1} = f(\sigma_{i-1}^t, \sigma_{i}^t, \sigma_{i+1}^t) \otimes r_i^t
-\end{equation}
-\begin{equation}
-r_i^{t+1} = \sigma_i^t
+    \begin{aligned}
+        & \sigma_i^{t+1} = f(\sigma_{i-1}^t, \sigma_{i}^t, \sigma_{i+1}^t) \otimes r_i^t\\
+        & r_i^{t+1} = \sigma_i^t \\
+    \end{aligned}
+    \label{rule}
 \end{equation}
 需要重新定义的是原二进制中的异或运算“$\otimes$”。我们假设这样的运算和异或一样满足交换律。而且，为了满足规则的可逆性质，这样的运算必须满足：如果 $a \otimes b = c$，那么 $a \otimes c = b$。通过列举所有规则，我们找到如下三个符合这种要求的规则：
 
@@ -209,9 +212,9 @@ r_i^{t+1} = \sigma_i^t
     \item 二阶子群：
     \begin{equation*}
         \begin{aligned}
-        H_2^{1(i)} &= \{e, C^i\}, \quad i = 1, 2, 3  \\
-        H_2^2 &= \{e, S\}  \\
-        H_2^{3(i)} &= \{e, SC^i\}, \quad i = 1, 2, 3 
+        H_{2A}^{(i)} &= \{e, C^i\}, \quad i = 1, 2, 3  \\
+        H_{2B} &= \{e, S\}  \\
+        H_{2C}^{(i)} &= \{e, SC^i\}, \quad i = 1, 2, 3 
     \end{aligned}
     \end{equation*}
     其中 $H_2^{1(i)}$ 是三种轮换操作中的一种，$H_2^2$ 是状态变换操作，$H_2^{3(i)}$ 是状态变换和轮换的联合操作。
@@ -220,9 +223,9 @@ r_i^{t+1} = \sigma_i^t
     \item 六阶子群：
     \begin{equation*}
         \begin{aligned}
-        H_6^1 &= \{e, C^1, C^2, C^3, C^4, C^5\}  \\
-        H_6^2 &= \{e, C^4, C^5, S, SC^4, SC^5\} \\
-        H_6^3 &= \{e, C^4, C^5, SC^1, SC^2, SC^3\}
+        H_{6A} &= \{e, C^1, C^2, C^3, C^4, C^5\}  \\
+        H_{6B} &= \{e, C^4, C^5, S, SC^4, SC^5\} \\
+        H_{6C} &= \{e, C^4, C^5, SC^1, SC^2, SC^3\}
         \end{aligned}
     \end{equation*}
     其中 $H_6^1$ 是轮换操作的子群即$S_3$ ， 而$H_6^2$ 和 $H_6^3$ 是状态变换和轮换的联合操作。
@@ -249,14 +252,14 @@ r_i^{t+1} = \sigma_i^t
 子群 & 轨道数目 & 对称规则数$N$\\
 \colrule
 $H_1$ & 27 & $3^{27}$ \\
-$H_2^{1(i)}$ & 18 & $3^{18}$ \\
-$H_2^2$ & 14 & $3^{14}$ \\
-$H_2^{3(i)}$ & 15 & $3^{15}$ \\
+$H_{2A}^{(i)}$ & 18 & $3^{18}$ \\
+$H_{2B}^2$ & 14 & $3^{14}$ \\
+$H_{2C}^{(i)}$ & 15 & $3^{15}$ \\
 $H_3$ & 11 & $3^{11}$ \\
 $H_4^{i}$ & 10 & $3^{10}$ \\
-$H_6^1$ & 10 & $3^{10}$ \\
-$H_6^2$ & 6 & $3^{6}$ \\
-$H_6^3$ & 7 & $3^{7}$ \\
+$H_{6A}$ & 10 & $3^{10}$ \\
+$H_{6B}$ & 6 & $3^{6}$ \\
+$H_{6C}$ & 7 & $3^{7}$ \\
 $G$ & 6 & $3^{6}$ \\
 \end{tabular}
 \end{ruledtabular}
@@ -276,14 +279,14 @@ $G$ & 6 & $3^{6}$ \\
 子群 & 仅具有该子群不变性的规则数 $N_i$ \\
 \colrule
 $H_1$ & $3^{27} - 3^{19} - 3^{16} - 3^{14} + 2 \cdot 3^{11} + 3^{7} +3^{6}$ \\
-$H_2^{1(i)}$ & $3^{18} - 2 \cdot 3^{10}  + 3^{6}$\\
-$H_2^2$ & $3^{14} - 3^{11} + 3^{7} - 3^{6}$\\
-$H_2^{3(i)}$ & $3^{15} - 3^{10} - 3^{7} + 3^{6}$ \\
+$H_{2A}^{(i)}$ & $3^{18} - 2 \cdot 3^{10}  + 3^{6}$\\
+$H_{2B}^2$ & $3^{14} - 3^{11} + 3^{7} - 3^{6}$\\
+$H_{2C}^{(i)}$ & $3^{15} - 3^{10} - 3^{7} + 3^{6}$ \\
 $H_3$ & $3^{11}- 3^{10} - 3^{7} + 3^{6}$ \\
 $H_4^{i}$ & $3^{10} - 3^{6}$ \\
-$H_6^1$ &  $3^{10} - 3^{6}$ \\
-$H_6^2$ &  0 \\
-$H_6^3$ &  $3^{7} - 3^{6}$ \\
+$H_{6A}$ &  $3^{10} - 3^{6}$ \\
+$H_{6B} $ &  0 \\
+$H_{6C}$ &  $3^{7} - 3^{6}$ \\
 $G$ &  $3^{6}$ \\
 \end{tabular}
 \end{ruledtabular}
@@ -299,7 +302,7 @@ $N_1$其实对应的就是不存在任何对称性的规则数目。当然，在
     \end{aligned}
 \end{equation}
 
-这就是如果我们要对每个等价类逐一考察，所需要面对的数据规模：$10^{11}$ 数量级。
+这就是如果我们要对每个等价类逐一考察，所需要面对的数据规模：$10^{11}$ 数量级。我们在这里并没有引入任何关于$\otimes$的问题，上述所有的分析全部基于$f$的固有性质。
 
 \subsection{三元 ERCA 的动力学特征}
 由于三元ERCA仍然满足二元的可逆结构，我们同样期待他满足与二元ERCA类似的动力学特征。同样，我们期望其同样满足热化，接下来我们将分析一下可热化的条件。
@@ -312,7 +315,8 @@ $N_1$其实对应的就是不存在任何对称性的规则数目。当然，在
     \Phi = \sum_i F(\sigma_i^t , r_i^t , \sigma_{i+1}^t , r_{i+1}^t)
 \end{equation}
 
-其中$F$是一个全局函数，如果对于某个规则来说，存在一个非平凡的F使得Q在演化过程中保持不变，那么我们就说这个规则具有一个可加性的守恒量。对于具有可加性守恒量的规则来说，系统的微观轨道会被限制在某些特定的相空间区域内，从而破坏了热化条件。因此，分析三元ERCA的可加性守恒量对于理解其热化条件是非常重要的。
+其中$F$是一个全局函数，如果对于某个规则来说，存在一个非平凡的$F$使得$\Phi$在演化过程中保持不变，那么我们就说这个规则具有一个可加性的守恒量。即在规则的一次全局更新下，$\Phi(t+1)=\Phi(t)$。
+
 体系的配分函数可以用来分析系统的热化行为。对于三元ERCA，我们可以定义一个配分函数来描述系统在不同状态下的统计权重。通过计算配分函数，我们可以得到系统的热力学性质，如自由能、熵等，从而进一步分析系统的热化行为。配分函数的定义式如下：
 \begin{equation}
     \begin{aligned}
@@ -321,19 +325,231 @@ $N_1$其实对应的就是不存在任何对称性的规则数目。当然，在
     \end{aligned}
 \end{equation}
 
+$F$总计$3^4=81$种输入。对于任意格点$i$，定义\textbf{局域流}如下：
+\begin{equation}
+    F(\sigma_i^{t+1} , r_i^{t+1} , \sigma_{i+1}^{t+1} , r_{i+1}^{t+1})-F(\sigma_i^t , r_i^t , \sigma_{i+1}^t , r_{i+1}^t)= J_i - J_{i+1}
+\end{equation}
+若对于所有的格点$i$都满足这个关系，那么体系可以天然满足$\sum_i (J_{i+1}-J_{i}) = 0$，进一步我们可以得到$\Phi(t+1)=\Phi(t)$。这预示着若体系可以解耦成局域流的存在，则必会存在一个相应的加性守恒量。
 
+但若继续沿用Shinji Takesue\cite{shinjin}关于对所有的F进行穷举的方式，数据集太过庞大。我们尝试采用约束矩阵的方法求解。
+对长度$L$的环，枚举所有$3^{2L}$个初始构型。对每个构型，进行一步演化，要求$\Phi(t+1) - \Phi(t) = 0$，得到关于$\mathbf{F} \in \mathbb{R}^{81}$的线性齐次方程。收集所有$3^{2L}$个方程，构成约束矩阵$M_f$（$3^{2L} \times 81$），守恒条件为：
+\begin{equation}
+    M_f \cdot \mathbf{F} = 0
+\end{equation}
+通过奇异值分解（SVD）计算零空间维度$d = 81 - \operatorname{rank}(M_f)$。数值容差取$10^{-10}$，前54-72个奇异值显著大于零（$\sim 1-15$），其余接近机器精度（$\sim 10^{-15}$）。由该定义，我们可以得知，$d$的大小跟一维环的长度$L$无关。
 
+在接下来的计算中，我们使用的$\otimes$形式如下：
+\begin{equation}
+\otimes = \begin{pmatrix}
+-1 & 1 & 0 \\
+1 & 0 & -1 \\
+0 & -1 & 1
+\end{pmatrix}
+\end{equation}
+其中行索引对应$a$（取$-1,0,1$），列索引对应$b$（取$-1,0,1$）。
+正如我们前面提到的：$\otimes$ 的选取并不会导致它们在相空间层面产生完全不同的轨道划分。热化/非热化的分类在三个表中高度一致，两两之间的Jaccard相似度高达0.96，而这两两之间的差异可能来自离散规则空间中标号变化导致的边界效应。
+这在一方面，表示了三个$\otimes$的源于同一个代数空间。另一方面，表明热化是$\{f, \otimes\}$组合的属性，而非$f$的固有属性。
+
+\subsubsection{F的零空间}
+我们先来简单分析一下$F$的性质。若有一个良好函数$F$使得：
+\begin{equation}
+    F_J (\sigma_i , r_i , \sigma_{i+1} , r_{i+1}) = J(\sigma_i , r_i) - J(\sigma_{i+1} , r_{i+1})
+    \label{F_J}
+\end{equation}
+这表明$F$被完全解耦，这会导致$\sum_i F \equiv 0$。而这对于所有的规则都成立，自然而然，这种特殊的$F_J$属于$F$的零空间。
+
+$J$总共有$3^2=9$组，但这9个$J$中线性独立项只有8个。
+\begin{equation}
+    J(\sigma_i , r_i) = \sum_{a , b \in \{-1 ,0 ,1\}} J(a , b)\delta_{\sigma_i = a , r_i = b}
+\end{equation}
+$J(a,b)$为$J(\sigma_i , r_i)$在$(a,b)$上的取值。
+代入\ref{F_J}式有：
+\begin{equation}
+    \begin{aligned}
+            & F_J (\sigma_i , r_i , \sigma_{i+1} , r_{i+1}) \\
+            & = \sum_{a , b } J(a , b) \delta_{\sigma_i = a , r_i = b} - \sum_{a , b} J(a , b)\delta_{\sigma_{i+1} = a , r_{i+1} = b} \\
+            & = \sum_{a , b } J(a , b) (\delta_{\sigma_i = a , r_i = b}-\delta_{\sigma_{i+1} = a , r_{i+1} = b}) \\
+            & = \sum_{a , b } J(a , b) F_{a,b}(\sigma_i , r_i , \sigma_{i+1} , r_{i+1})
+    \end{aligned}
+\end{equation}
+我们可以把基取做：$F_{a,b}(\sigma_i , r_i , \sigma_{i+1} , r_{i+1})\equiv \delta_{\sigma_i = a , r_i = b}-\delta_{\sigma_{i+1} = a , r_{i+1} = b}$。
+这组基自然满足：
+\begin{equation}
+    \sum_{a,b \in \{-1 ,0 ,1\}}F_{a,b} = 0
+\end{equation}
+这9个基向量线性相关，零空间$d=8$。再加上$F\equiv 1$引入的1维。则有$d=9$维不依赖于f选择的F的零空间，称为$F$的平凡零空间。
+
+那么减去这9维的平凡零空间后，$d-9$为非平凡动力学守恒量的维数。由此，我们可以假设：
+$d = 9$意味着无额外守恒量，系统可能热化；$d > 9$意味着存在额外守恒量，相空间被约束在低维子流形上，系统确定非热化。
+
+\subsection{对称性和热化条件}
+根据\ref{tab:corrected}的内容，我们对各个对称性进行分析。
+\begin{table}[h]
+\centering
+\caption{各对称类在不同采样数下的热化比例（$d=9$ 的规则占比）}
+\label{tab:thermalization_sampling}
+\begin{tabular}{lccccc}
+\toprule
+对称类 & $n=30$ & $n=50$ & $n=100$ & $n=500$ & $n=1000$ \\
+\midrule
+$H_1$ & 100.0\% & 96.0\% & 97.0\% & 98.0\% & 98.1\% \\
+$H_{2A}$ & 100.0\% & 100.0\% & 99.0\% & 98.0\% & 98.4\% \\
+$H_{2B}$ & 100.0\% & 86.0\% & 90.0\% & 90.4\% & 90.4\% \\
+$H_{2C}$ & 96.7\% & 98.0\% & 96.0\% & 98.0\% & 96.5\% \\
+$H_3$ & 0.0\% & 0.0\% & 0.0\% & 0.0\% & 0.0\% \\
+$H_4$ & 93.3\% & 88.0\% & 86.0\% & 89.6\% & 86.3\% \\
+$H_{6A}$ & 0.0\% & 0.0\% & 0.0\% & 0.0\% & 0.0\% \\
+$H_{6B}$ & 0.0\% & 0.0\% & 0.0\% & 0.0\% & 0.0\% \\
+$H_{6C}$ & 0.0\% & 0.0\% & 0.0\% & 0.0\% & 0.0\% \\
+$G$ & 0.0\% & 0.0\% & 0.0\% & 0.0\% & 0.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/thermalization_vs_symmetry.png} 
+\caption{\label{fig:thermalization_vs_symmetry} 各对称类在不同采样数下的热化比例}
+\end{figure}
+
+所有具有三元轮换性的$f$均不满足热化条件，发生\textbf{可热化-热化相变}。这个也是易于分析的。由于三元轮换对称性：$f(\nu , \mu , \kappa) = f(\kappa , \nu , \mu) = f(\mu , \kappa , \nu)$
+在群$H_3$的影响下，定义域$\{-1,0,1\}^3$被划分为11条互不相交的轨道，而这种三轮换对称性强制$f$在 11 个轨道上取常值，
+导致更新规则中的"耦合"减弱。具体而言，在$\sigma_i^{t+1} = f(\sigma_{i-1}^t, \sigma_{i}^t, \sigma_{i+1}^t) \otimes r_i^t$中，
+$f$对其三个输入的对称化使得某些线性约束变得冗余。
+
+在数学上，三轮换对称性导致$M_f$的行向量之间出现额外的线性关系。这些线性关系减少了独立方程的数量，从而降低了秩，增加了零空间维度。
+三轮换对称性约束了$f$的结构，使得某些局域模式在演化中保持不变。
+
+三轮换对称性破坏热化的机制在二元和三元的 ERCA 中是普适的。这不是三元系统特有的现象，而是 ERCA 的一般性质。
+在二元ERCA中，三轮换对称性会显著降低轨道长度，从而将系统局域在部分小的像空间内。两者的区别在于三元ERCA由于相空间更大，非热化轨道长度仍然是一个较大的量，但相较于热化的轨道长度更小。
+所以我们认为：
+在形如式\ref{rule}的n元ERCA构造中，三元轮换对称性破坏系统可热化是普适的。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/fig1_d_value.png} 
+\caption{\label{fig:d_symmetry} 各对称类的守恒量维度$d$。绿色柱表示热化类（$d \approx 9$），红色柱表示非热化类（$d > 9$）。黑色虚线标记$d=9$的热化阈值。误差棒为标准差。}
+\end{figure}
+
+由\ref{fig:d_symmetry}中，我们可以发现具有三元轮换对称性的$f$最低维数为11，但目前没有得出一个相对完美的理论解释。
+
+\subsection{热化的进一步讨论}
+在前面我们提到$d=9$是热化的判定标准。在这一部分，我们将关注于具体的热化性。在接下来的讨论中，我们将使用$T01101001T101010010110T0001$（具体规则见\ref{tab:ternary_rule}）作为$d=9$的可热化的例子，$f \equiv 1$为$d=27$的例子作为对照。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/spacetime_diagram_sigma.png} 
+\caption{\label{fig:d9_spacetime}d=9的时空图表明系统没有出现非常强的周期性，系统发生明显混沌}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/spacetime_diagram_sigma_new.png} 
+\caption{\label{fig:d27_spacetime}在d=27时空图中，体系以$T=4$进行演化，产生出非常强的局域性}
+\end{figure}
+
+\subsubsection{轨道长度}
+轨道结构是区分热化与非热化的最直接判据。热化系统产生少量指数增长的长轨道，遍历相空间；
+而非热化系统产生大量短周期轨道，被约束在守恒量定义的子流形上。轨道长度在热化类和非热化类之间存在系统性差异，
+且这一差异随系统尺寸增大而扩大。轨道结构分析为 $d=9$ 作为热化判据提供了最强有力的动力学证据。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/fig3_orbit_length.png} 
+\caption{\label{fig:d_orbit} 各对称类的轨道长度。热化类（绿色）的轨道明显长于非热化类（红色）。}
+\end{figure}
+
+图\ref{fig:d_orbit}展示了各对称类的轨道长度。
+热化类（$\sim 28000$）的轨道明显长于非热化类（$\sim 20000-26000$）。G全对称类的轨道最短（20130），
+受守恒量约束最严重。H$_1$的轨道最长（27831），遍历性最强。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/3_orbit_structure.png} 
+\caption{\label{fig:d9_orbit} 单条轨道覆盖相空间的显著部分，系统能够遍历大部分相空间 }
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/3_orbit_structure_new.png} 
+\caption{\label{fig:d27_orbit} 所有轨道长度严格为 4（或1），系统被束缚在极小区域内}
+\end{figure}
+
+在$L=4$时（状态空间6561），该规则有127条轨道，平均长度$\langle T \rangle = 51.7$，最大轨道$T_{\max} = 348$。轨道长度随$L$指数增长：
+$L=3$时$\langle T \rangle = 25.1$，$L=5$时$\langle T \rangle = 239.1$，$L=8$时采样均值达9375。
+作为对比，d=27的常值规则（$f \equiv 1$）在$L=4$时有1641条轨道，全部长度严格为4，轨道数随$L$以$9^L/4$增长。这种超短的轨道无法使系统热化。
+
+我们进一步猜测，轨道长度出现的概率随着长度的变化关系存在幂律：
+\begin{equation}
+    P(T) \varpropto T^{-\alpha}
+\end{equation}
+但经过采样模拟后，我们发现$\alpha$并不是一个普适性的常数，$\alpha$依赖于$f$的选取即系统的微观细节。
+
+\subsubsection{Lyapunov指数}
+对于两个不同对两个长度均为$2L$的构型$c_1,c_2$和（每个格点有$r$和$\sigma$两个自由度），定义 $Hamming$ 距离：
+\begin{equation}
+    D(t) = \sum_{i=0}^{2L-1} 1[c_{1,i}(t) \\neq c_{1,i+1}(t)]
+\end{equation}
+这个量统计了两个构型在多少个格点自由度上取值不同。
+在扰动远未饱和的早期阶段$(0 < D(t) < 2L\times 0.8)$假设有指数增长：
+\begin{equation}
+    D(t) \approx D(0) e^{\lambda t}
+\end{equation}
+其中，$\lambda$ 被称为 Lyapunov指数。我们期望热化系统中局部扰动会迅速扩散到全局，Hamming 距离快速增长；非热化系统扰动被局域，Hamming 距离不增长。
+若体系$\lambda > 0 $， 则系统对初始扰动敏感，呈混沌特征。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/fig2_lyapunov.png} 
+\caption{\label{fig:d_lyapunov} 各对称类的Lyapunov指数。所有类的$\lambda > 0$。绿色柱为热化类，红色柱为非热化类。}
+\end{figure}
+
+虽然非热化类的$\lambda$系统性地低于热化类（约低15-20\%），但是我们期望在满足热力学极限$L \to \infty ， T \to \infty$下，所有$d>9$的规则都会导致体系的$\lambda$为0。而现在出现的这种错觉这可能是由于体系尺度太短或演化时间太短导致在拟合时候出现的误差。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/1_butterfly_effect.png} 
+\caption{\label{fig:d9_Lyapunov} 局部的扰动被迅速扩散到全局，$\lambda \approx 0.184$ 体系呈扩散特征 }
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/1_butterfly_effect_new.png} 
+\caption{\label{d27_Lyapunov} 扰动被局域化，体系不呈热化性质}
+\end{figure}
+
+我们对500个随机$d=9$规则的Lyapunov指数进行统计（$L=6$）发现：100\%的规则$\lambda > 0$，分布符合Gaussian分布（KS检验$p=0.97$），均值$\bar{\lambda} = 0.045$，标准差$\sigma_\lambda = 0.006$，如图\ref{Lyapunov}所示：
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/lyapunov_distribution.png} 
+\caption{\label{Lyapunov}  $\lambda $ 满足高斯分布 }
+\end{figure}
+
+在进一步的分析中，我们对20个固定规则在$L=4$至$L=100$下的Lyapunov指数进行有限尺寸标度分析。
+数据拟合$\lambda(L) = \lambda_\infty + c/L^{\alpha}$，最佳拟合指数$\alpha \approx 0.5$，
+热力学极限$\lambda_\infty \approx 0.060 > 0$。这确证了系统在$L \to \infty$时保持混沌。
+这说明$\lambda$是强度量，不随系统大小变化，这是时空混沌具有有限关联长度的特征。
+
+\subsubsection{时间关联函数}
+我们在三元ERCA上同样定义时间关联函数用于度量系统对初始条件的记忆。对单一格点的$\sigma$ 分量，定义归一化的时间关联：
+\begin{equation}
+    C(t) = \frac{\left\langle (\sigma_i(t) - \left\langle \sigma_i (t)\right\rangle)(\sigma_i(0) - \left\langle \sigma_i (0)\right\rangle) \right\rangle }{\left\langle {(\sigma_{i}(0) - \left\langle \sigma\right\rangle)}^2\right\rangle}
+    \label{correlation}
+\end{equation}
+$\left\langle \cdot \right\rangle$代表对所有的格点i和体系的所有系综进行平均。所以式\ref{correlation}还可以写成如下形式：
+\begin{equation}
+    \begin{aligned}
+    & C_c (t) = \frac{\frac{1}{L} \sum_{i}^{L} (\sigma_i (0) - \overline{\sigma_c (0)})(\sigma_i (t) - \overline{\sigma_c (t)})}{\sqrt{\frac{1}{L}\sum_{i}^{L} (\sigma_i (0) - \overline{\sigma_c (0)})} \sqrt{\frac{1}{L}\sum_{i}^{L} (\sigma_i (t) - \overline{\sigma_c (t)})}}\\
+    C(t) = \left\langle C_c(t) \right\rangle 
+    \end{aligned}
+\end{equation}
+$c$代表了不同的初始构型，$\overline{\sigma}$代表$\sigma$的平均值。在该定义下有$C(0) = 1$
 
 \subsection{还没有写的重要部分，16号我真的不知道写不写的完，简单记一下}
 \begin{itemize}
-    \item 我们放弃了Shinji Takesue对256个穷举的方式，转而使用约束矩阵$M_f \, s.t. M_f \cdot F = 0$，通过$SVD$算法可以知道$M_f$的零空间，从而解析的得到$F$的零空间维数。
-    \item $d=9$时，体系可以发生热化，不存在可加性守恒量。
-    \item 所有具有三元轮换性的$f$均不满足热化条件，发生\textbf{可热化-热化相变}。
-    \item $\otimes$的选取对$f$是否热化存在影响，但主要还是$f$的作用。
-    \item 用长轨道、关联振荡、扰动冻结判断热化。
     \item 这种混沌不是由于Feigenbaum分岔，三元ERCA直接指向直接混沌。
-    \item 通过计算拟合出Lyapunov指数可能是强度量，导向三元ERCA可能是广延的时空混沌。
-    \item 关联衰减指数和轨道长度依赖于f的选取，属于微观结构部分。
+    \item 关联衰减指数属于微观结构部分。
 \end{itemize}
 
 \section{结论}

@@ -249,7 +249,6 @@ ax.axhline(y=50, color='gray', linestyle='--', linewidth=1, alpha=0.5)
 
 ax.set_xlabel('Symmetry Subgroup', fontsize=13, fontweight='bold')
 ax.set_ylabel('Thermalization Ratio (%)', fontsize=13, fontweight='bold')
-ax.set_title('Thermalization vs Symmetry in Ternary ERCA', fontsize=15, fontweight='bold')
 
 ax.set_xticks(x_pos)
 ax.set_xticklabels(x_labels, fontsize=12)

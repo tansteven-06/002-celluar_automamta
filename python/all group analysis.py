@@ -1,3 +1,4 @@
+#寻找各个群的d=9的个数
 import numpy as np
 from itertools import product
 

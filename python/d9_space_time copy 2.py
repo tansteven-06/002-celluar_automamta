@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # ============================================================
 # The specific d=9 rule
 # ============================================================
-rule_str = "T01101001T101010010110T0001"
+rule_str = "111111111111111111111111111"
 
 def char_to_val(c):
     if c == 'T':
@@ -96,12 +96,12 @@ im = ax.imshow(sigma_data, aspect='auto', cmap='RdBu_r', vmin=-1, vmax=1,
 ax.set_xlabel('Site i', fontsize=14, fontweight='bold')
 ax.set_ylabel('Time t', fontsize=14, fontweight='bold')
 ax.set_title('Space-Time Diagram: Chaotic Thermalization\n'
-             'd=9 Rule (T01101001T101010010110T0001)', 
+             'd=27 Rule (111111111111111111111111111)', 
              fontsize=15, fontweight='bold')
 cbar = plt.colorbar(im, ax=ax, ticks=[-1, 0, 1])
 cbar.set_label(r'$\sigma$', fontsize=13)
 
 plt.tight_layout()
-plt.savefig('spacetime_diagram_sigma.png', dpi=200, bbox_inches='tight')
+plt.savefig('spacetime_diagram_sigma_new.png', dpi=200, bbox_inches='tight')
 print("\nSaved: spacetime_diagram_sigma.png")
 plt.show()
