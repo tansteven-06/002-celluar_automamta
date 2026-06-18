@@ -493,7 +493,7 @@ $L=3$时$\langle T \rangle = 25.1$，$L=5$时$\langle T \rangle = 239.1$，$L=8$
 这个量统计了两个构型在多少个格点自由度上取值不同。
 在扰动远未饱和的早期阶段$(0 < D(t) < 2L\times 0.8)$假设有指数增长：
 \begin{equation}
-    D(t) \approx D(0) e^{\lambda t}
+    D(t) \sim D(0) e^{\lambda t}
 \end{equation}
 其中，$\lambda$ 被称为 Lyapunov指数。我们期望热化系统中局部扰动会迅速扩散到全局，Hamming 距离快速增长；非热化系统扰动被局域，Hamming 距离不增长。
 若体系$\lambda > 0 $， 则系统对初始扰动敏感，呈混沌特征。
@@ -522,7 +522,7 @@ $L=3$时$\langle T \rangle = 25.1$，$L=5$时$\langle T \rangle = 239.1$，$L=8$
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.45\textwidth]{image/lyapunov_distribution.png} 
+\includegraphics[width=0.45\textwidth]{image/lyapunov_gaussian.png} 
 \caption{\label{Lyapunov}  $\lambda $ 满足高斯分布 }
 \end{figure}
 
@@ -534,23 +534,103 @@ $L=3$时$\langle T \rangle = 25.1$，$L=5$时$\langle T \rangle = 239.1$，$L=8$
 \subsubsection{时间关联函数}
 我们在三元ERCA上同样定义时间关联函数用于度量系统对初始条件的记忆。对单一格点的$\sigma$ 分量，定义归一化的时间关联：
 \begin{equation}
-    C(t) = \frac{\left\langle (\sigma_i(t) - \left\langle \sigma_i (t)\right\rangle)(\sigma_i(0) - \left\langle \sigma_i (0)\right\rangle) \right\rangle }{\left\langle {(\sigma_{i}(0) - \left\langle \sigma\right\rangle)}^2\right\rangle}
+            C(t) = 
+            \frac{\left\langle (\sigma_i(t) - \left\langle \sigma_i (t)\right\rangle)(\sigma_i(0) - \left\langle \sigma_i (0)\right\rangle) \right\rangle }{\left\langle {(\sigma_{i}(0) - \left\langle \sigma\right\rangle)}^2\right\rangle}
     \label{correlation}
 \end{equation}
 $\left\langle \cdot \right\rangle$代表对所有的格点i和体系的所有系综进行平均。所以式\ref{correlation}还可以写成如下形式：
 \begin{equation}
     \begin{aligned}
-    & C_c (t) = \frac{\frac{1}{L} \sum_{i}^{L} (\sigma_i (0) - \overline{\sigma_c (0)})(\sigma_i (t) - \overline{\sigma_c (t)})}{\sqrt{\frac{1}{L}\sum_{i}^{L} (\sigma_i (0) - \overline{\sigma_c (0)})} \sqrt{\frac{1}{L}\sum_{i}^{L} (\sigma_i (t) - \overline{\sigma_c (t)})}}\\
-    C(t) = \left\langle C_c(t) \right\rangle 
+    & C_c (t) = \\
+    & \frac{\frac{1}{L} \sum_{i}^{L} (\sigma_i (0) - \overline{\sigma_c (0)})(\sigma_i (t) - \overline{\sigma_c (t)})}{\sqrt{\frac{1}{L}\sum_{i}^{L} (\sigma_i (0) - \overline{\sigma_c (0)})} \sqrt{\frac{1}{L}\sum_{i}^{L} (\sigma_i (t) - \overline{\sigma_c (t)})}}\\
+    & C(t) = \left\langle C_c(t) \right\rangle \\
     \end{aligned}
 \end{equation}
 $c$代表了不同的初始构型，$\overline{\sigma}$代表$\sigma$的平均值。在该定义下有$C(0) = 1$
 
-\subsection{还没有写的重要部分，16号我真的不知道写不写的完，简单记一下}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/2_memory_loss.png} 
+\caption{\label{d9_memory}d=9时，体系在长期上衰减到零，并发生小幅波动，记忆丢失}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/2_memory_loss_new.png} 
+\caption{\label{d27_memory}d=27时，体系在长期上以周期 4 振荡，不衰减，保存原有记忆}
+\end{figure}
+
+如图\ref{d9_memory},\ref{d27_memory}，在$L=10$时，时间关联函数$C(t)$在$t \approx 5$时从$C(0)=1$快速衰减到$|C(t)| < 0.1$，随后围绕零小幅波动（幅度$\sim 0.05$）。
+d=27规则的$C(t)$呈严格的周期4振荡：$C(t) = (0.62, 0.04, 0.32, 0.62, \ldots)$。
+这表明时间关联函数是验证热化行为的重要辅助指标。热化系统的C(t) 会快速衰减到零，而非热化系统则保持周期振荡或缓慢衰减。
+
+为了分析体系在长时间演化后的行为，我们定义关联饱和值：
+\begin{equation}
+    C_{sat} = \frac{1}{20} \sum_{T-19}^{T} |C(t)|\text{ （体系演化最后20步的$|C(t)|$）}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/correlation_saturation.png} 
+\caption{\label{correlation_saturation}左图：$G$和$H_1$的$C(t)$变化；右图：各个种类$C_{sat}$的值}
+\end{figure}
+如图\ref{correlation_saturation}，非热化规则的$C_{sat}$也可以接近零（0.08-0.11），看起来像"热化"了。但结合 d 值和轨道分析，它们实际上是被守恒量约束在低维子流形上，并未真正遍历整个相空间。
+因此，关联衰减是热化的必要但不充分条件。
+
+我们想寻找C(t)是否满足：
+\begin{equation}
+    C(t) \sim e^{-\gamma t}
+\end{equation}
+但我们经过对15个$d=9$规则的关联衰减指数$\gamma$（通过拟合得到）的统计显示均值为0.14，变异系数为0.73，不具有普适性，如图\ref{correlation_gamma},\ref{correlation_decay}所示。
+$\gamma$同样依赖于$f$的微观选取。并不是一个普适量。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/fig_gamma_histogram.png} 
+\caption{\label{correlation_gamma}$\gamma$不存在普适性}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/fig_correlation_decay.png} 
+\caption{\label{correlation_decay}$d=9$的15个$f$的关联函数演化}
+\end{figure}
+
+\subsubsection{Feigenbaum常数搜索}
+我们尝试了以下两种参数化方法寻找倍周期分岔：
 \begin{itemize}
-    \item 这种混沌不是由于Feigenbaum分岔，三元ERCA直接指向直接混沌。
-    \item 关联衰减指数属于微观结构部分。
+    \item 参数化$f$规则（在周期规则和混沌规则之间插值）:$$f_\lambda = ((1-\lambda)f_{periodic} + \lambda f_{chaotic})取最接近的{-1,0,1}$$
+    \item 参数化$\otimes$表（在Rule 1和Rule 3间旋转（见图\ref{fig:ternary_operators}））。
 \end{itemize}
+
+但是两种方法均未观察到标准的倍周期分岔序列。在参数化$f$的扫描中，估算的$\delta$值为$-0.004$和$2.44$，与Feigenbaum常数$\delta = 4.669$相差甚远。
+这表明三元ERCA的混沌不是通过Feigenbaum型倍周期分岔产生的，而是规则空间中直接存在的混沌。这与我们之前的分析一致。
+
+\subsubsection{讨论}
+在结束这一部分之前，我们想对某些问题进行说明：
+\begin{itemize}
+    \item 所有规则（包括非热化规则）的Lyapunov指数都为正，时间关联都可以衰减，表明混沌普遍存在。然而，混沌不等同于热化：非热化规则虽然表现出混沌行为，但由于额外守恒量的约束，轨道被限制在相空间的低维子流形上。这体现在轨道长度上——热化类的轨道长度系统性地大于非热化类，且两者差距在$L$增大时扩大。这一区分揭示了可加性守恒量判据的独特价值：Lyapunov指数和关联衰减不能区分热化和非热化（两者在非热化规则中也成立），而$d=9$是唯一可靠的二分判据。
+    \item 三轮换对称性不通过Noether定理产生守恒量（因为它是离散对称性），而是通过约束$f$在定义域轨道上的取值来强制产生可加性守恒量。在$G$作用下，定义域有6个轨道。三轮换对称性要求$f$在这些轨道上取特定关系，这些约束导致$M_f$的秩从72（d=9）降低到54-68（d=11-27），从而产生额外的零空间方向。
+    \item 本研究区分了普适和非普适的性质。普适的性质包括：$d=9 \iff$热化的定性判据、$\lambda > 0$的存在性（100\%的规则）、$\lambda$的Gaussian分布形态（KS检验$p=0.97$）、$\lambda_\infty > 0$的热力学极限行为。非普适的性质包括：轨道长度指数$\alpha$（变异系数0.64）、关联衰减指数$\gamma$（变异系数0.73）、$\lambda$的具体数值。这类似于统计力学中临界指数是普适的而临界温度不是\cite{Yakov}。
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/fig4_lambda_vs_d.png} 
+\caption{$\lambda$和$d$之间的相图，绿色圆点为热化规则（$d=9$），红色叉号为非热化规则（$d>9$）。黑色虚线标记相边界$d=9.5$。}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/fig5_orbit_vs_d.png} 
+\caption{轨道长度和$d$之间的相图}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{image/fig6_3d_phase_diagram.png} 
+\caption{三维相图：$(d, \lambda, \text{轨道长度})$。热化规则（绿色圆点）聚集在$d=9$平面附近。非热化规则（红色叉号）分布在$d>9$区域。}
+\end{figure}
 
 \section{结论}
 

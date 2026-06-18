@@ -63,7 +63,6 @@ def get_d_value(f):
     return 81 - rank
 
 def compute_correlation(f, L, n_samples=20, max_steps=50):
-    """Compute time correlation function C(t)"""
     states = [-1, 0, 1]
     all_corr = []
     
@@ -78,7 +77,7 @@ def compute_correlation(f, L, n_samples=20, max_steps=50):
         
         sigmas_0_norm = (sigmas_0 - mean_0) / std_0
         
-        corr_t = [1.0]  # C(0) = 1
+        corr_t = [1.0]
         
         for t in range(1, max_steps+1):
             sigmas = config[0::2]
@@ -109,20 +108,15 @@ def compute_correlation(f, L, n_samples=20, max_steps=50):
     return np.mean(all_corr, axis=0)
 
 def fit_decay_rate(corr, t_max=20):
-    """Fit C(t) = exp(-γ*t) for early times"""
     t = np.arange(t_max+1)
     c = corr[:t_max+1]
-    
-    # Only use positive values for log fit
     valid = c > 0.01
     if np.sum(valid) < 5:
         return -1
-    
     t_valid = t[valid]
     c_valid = c[valid]
-    
     coeffs = np.polyfit(t_valid, np.log(c_valid), 1)
-    return -coeffs[0]  # γ
+    return -coeffs[0]
 
 # ============================================================
 # Find d=9 rules
@@ -139,12 +133,10 @@ while len(d9_rules) < 15 and attempts < 5000:
     f_vec = np.random.choice([-1, 0, 1], 27)
     f_arr = f_to_array(f_vec)
     d = get_d_value(f_arr)
-    
     if d == 9:
         d9_rules.append(f_vec)
         d9_f_arrays.append(f_arr)
         print(f"  Found #{len(d9_rules)} (attempt {attempts+1})")
-    
     attempts += 1
 
 print(f"\nFound {len(d9_rules)} d=9 rules")
@@ -168,80 +160,57 @@ for idx, f_arr in enumerate(d9_f_arrays):
     print(f"    γ = {gamma:.4f}")
 
 all_gamma = np.array(all_gamma)
-
-# Remove failed fits
 valid_gamma = all_gamma > 0
 gamma_valid = all_gamma[valid_gamma]
 
 print(f"\nValid fits: {np.sum(valid_gamma)}/{len(all_gamma)}")
+print(f"Mean γ = {np.mean(gamma_valid):.4f}, Std γ = {np.std(gamma_valid):.4f}, CV = {np.std(gamma_valid)/np.mean(gamma_valid):.4f}")
 
 # ============================================================
-# Results
+# FIGURE 1: Correlation functions
 # ============================================================
 
-print(f"\n{'='*70}")
-print(f"RESULTS: Decay rate γ for {len(gamma_valid)} d=9 rules")
-print(f"{'='*70}")
-print(f"  γ values: {gamma_valid}")
-print(f"  Mean γ = {np.mean(gamma_valid):.4f}")
-print(f"  Std γ  = {np.std(gamma_valid):.4f}")
-print(f"  Median γ = {np.median(gamma_valid):.4f}")
-print(f"  CV = {np.std(gamma_valid)/np.mean(gamma_valid):.4f}")
+fig1, ax1 = plt.subplots(figsize=(10, 7))
 
-# ============================================================
-# Plot
-# ============================================================
-
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-# 1. All correlation functions
 t = np.arange(41)
 for idx, corr in enumerate(all_correlations):
-    if idx < 10:  # Show first 10
-        ax1.plot(t, np.abs(corr), '-', linewidth=1, alpha=0.7, 
-                 label=f'γ={all_gamma[idx]:.3f}' if all_gamma[idx] > 0 else 'failed')
+    if idx < 10:
+        label = f'γ={all_gamma[idx]:.3f}' if all_gamma[idx] > 0 else 'failed'
+        ax1.plot(t, np.abs(corr), '-', linewidth=1.2, alpha=0.75, label=label)
 
 ax1.set_yscale('log')
-ax1.set_xlabel('Time t', fontsize=12, fontweight='bold')
-ax1.set_ylabel('|C(t)|', fontsize=12, fontweight='bold')
-ax1.set_title(f'Correlation Decay ({len(d9_rules)} d=9 rules)', fontsize=13, fontweight='bold')
-ax1.legend(fontsize=8, loc='lower left')
+ax1.set_xlabel('Time t', fontsize=14, fontweight='bold')
+ax1.set_ylabel('|C(t)|', fontsize=14, fontweight='bold')
+ax1.set_title(f'Correlation Decay ({len(d9_rules)} d=9 Rules, L={L})', fontsize=15, fontweight='bold')
+ax1.legend(fontsize=9, loc='lower left', ncol=2)
 ax1.grid(True, alpha=0.3)
+ax1.set_ylim(0.001, 2)
 
-# 2. Histogram of γ
-ax2.hist(gamma_valid, bins=8, color='steelblue', edgecolor='white', alpha=0.8)
-ax2.axvline(x=np.mean(gamma_valid), color='red', linestyle='--', linewidth=2, 
+plt.tight_layout()
+plt.savefig('fig_correlation_decay.png', dpi=200, bbox_inches='tight')
+print("Saved: fig_correlation_decay.png")
+plt.show()
+
+# ============================================================
+# FIGURE 2: Histogram of γ
+# ============================================================
+
+fig2, ax2 = plt.subplots(figsize=(10, 7))
+
+ax2.hist(gamma_valid, bins=8, color='steelblue', edgecolor='white', alpha=0.85, linewidth=1.2)
+ax2.axvline(x=np.mean(gamma_valid), color='red', linestyle='--', linewidth=2.5, 
             label=f'Mean = {np.mean(gamma_valid):.4f}')
-ax2.axvline(x=np.median(gamma_valid), color='green', linestyle=':', linewidth=2, 
+ax2.axvline(x=np.median(gamma_valid), color='green', linestyle=':', linewidth=2.5, 
             label=f'Median = {np.median(gamma_valid):.4f}')
-ax2.set_xlabel('Decay Rate γ', fontsize=12, fontweight='bold')
-ax2.set_ylabel('Number of Rules', fontsize=12, fontweight='bold')
-ax2.set_title(f'Distribution of γ\nCV = {np.std(gamma_valid)/np.mean(gamma_valid):.3f}', 
-              fontsize=13, fontweight='bold')
-ax2.legend(fontsize=10)
+ax2.set_xlabel('Decay Rate γ', fontsize=14, fontweight='bold')
+ax2.set_ylabel('Number of Rules', fontsize=14, fontweight='bold')
+ax2.set_title(f'Distribution of Correlation Decay Rate\n'
+              f'(CV = {np.std(gamma_valid)/np.mean(gamma_valid):.3f})', 
+              fontsize=15, fontweight='bold')
+ax2.legend(fontsize=12, framealpha=0.9)
 ax2.grid(True, alpha=0.3, axis='y')
 
-plt.suptitle('Universality of Correlation Decay in d=9 Rules', 
-             fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig('correlation_decay_universality.png', dpi=150, bbox_inches='tight')
-print("\nSaved: correlation_decay_universality.png")
-
-# ============================================================
-# Conclusion
-# ============================================================
-
-print(f"\n{'='*70}")
-print(f"CONCLUSION")
-print(f"{'='*70}")
-
-cv = np.std(gamma_valid) / np.mean(gamma_valid)
-
-if cv < 0.3:
-    print(f"\n✓ γ is UNIVERSAL across d=9 rules!")
-    print(f"  γ = {np.mean(gamma_valid):.4f} ± {np.std(gamma_valid):.4f}")
-else:
-    print(f"\nγ shows significant variation (CV = {cv:.3f})")
-    print(f"  NOT universal across d=9 rules.")
-
+plt.savefig('fig_gamma_histogram.png', dpi=200, bbox_inches='tight')
+print("Saved: fig_gamma_histogram.png")
 plt.show()

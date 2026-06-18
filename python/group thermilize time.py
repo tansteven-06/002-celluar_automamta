@@ -204,12 +204,12 @@ subgroup_classes = [
 ]
 
 # ============================================================
-# Main computation: L=10, 500 rules per class
+# Main computation: L=10, 100 rules per class
 # ============================================================
 
 np.random.seed(42)
 L = 10
-n_rules_per_class = 500
+n_rules_per_class = 100
 
 print("=" * 70)
 print(f"TERNARY ERCA PHASE DIAGRAM (FRESH SAMPLING)")
@@ -378,11 +378,12 @@ for cn in class_names:
                    linewidth=1, zorder=3)
 
 ax.axvline(x=9.5, color='black', linestyle='--', linewidth=2.5, alpha=0.7, label='Phase boundary')
-ax.fill_between([8, 9.5], 0, 1e6, alpha=0.06, color='green')
-ax.fill_between([9.5, 30], 0, 1e6, alpha=0.06, color='red')
+ax.fill_between([8, 9.5], 1e2, 1e6, alpha=0.06, color='green')
+ax.fill_between([9.5, 30], 1e2, 1e6, alpha=0.06, color='red')
 ax.set_xlabel('d (nullspace dimension)', fontsize=15, fontweight='bold')
 ax.set_ylabel('Orbit Length', fontsize=15, fontweight='bold')
 ax.set_title(f'Phase Diagram: Orbit Length vs d (L={L}, n={n_rules_per_class})', fontsize=16, fontweight='bold')
+ax.set_yscale('log')
 ax.legend(fontsize=12, loc='upper right')
 ax.grid(True, alpha=0.3)
 plt.tight_layout()
