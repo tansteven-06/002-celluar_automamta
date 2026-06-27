@@ -1,9 +1,44 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{properties}
+Vadim Anishchenko, Tatiana Vadivasova, Galina Strelkova, and George Okrokvertskhov.
+\newblock Statistical properties of dynamical chaos.
+\newblock {\em Mathematical biosciences and engineering : MBE}, 1:161--84, 06 2004.
+
+\bibitem{Mitchell}
+Mitchell Feigenbaum.
+\newblock Quantitative universality for a class of nonlinear transformations.
+\newblock {\em J. Stat. Phys.}, 19:25--52, 07 1978.
+
+\bibitem{Latin}
+PETER GIBLIN.
+\newblock Review of latin squares and their applications.
+\newblock {\em The Mathematical Gazette}, 101(552):pp. 571--573, 2017.
+
+\bibitem{jaccard}
+P~Jaccard.
+\newblock étude comparative de la distribution florale dans une portion des alpes et du jura.
+\newblock {\em Bulletin de la Société Vaudoise des Sciences Naturelles}, 1901.
+
+\bibitem{BFb0021737}
+Academician A.~N. Kolmogorov.
+\newblock Preservation of conditionally periodic movements with small change in the hamilton function.
+\newblock In Giulio Casati and Joseph Ford, editors, {\em Stochastic Behavior in Classical and Quantum Hamiltonian Systems}, pages 51--56, Berlin, Heidelberg, 1979. Springer Berlin Heidelberg.
 
 \bibitem{Setun}
 G.D.Frolov N.A.Krinitsky, G.A.Mironov.
 \newblock {\em Program-controlled machine Setun}, chapter~10.
 \newblock 1963.
+
+\bibitem{Ljapunov}
+V.~I. Oseledets.
+\newblock A multiplicative ergodic theorem. characteristic ljapunov, exponents of dynamical systems.
+\newblock {\em Trudy Moskovskogo Matematicheskogo Obshchestva}, 19:179 -- 210, 1968.
+
+\bibitem{YPomeau_1984}
+Y~Pomeau.
+\newblock Invariant in cellular automata.
+\newblock 17(8):L415, jun 1984.
 
 \bibitem{Yakov}
 Yakov~G Sinai.
@@ -12,6 +47,7 @@ Yakov~G Sinai.
 
 \bibitem{shinjin}
 Shinji Takesue.
+\newblock Ergodic properties and thermodynamic behavior elementary reversible cellular automata.
 \newblock {\em Journal of Statistical Physics,}, 56, 1989.
 
 \bibitem{VICHNIAC198496}
@@ -21,6 +57,7 @@ Gérard~Y. Vichniac.
 
 \bibitem{wolfram}
 Stephen Wolfram.
+\newblock Statistical mechanics of cellular automata.
 \newblock {\em Rev. Mod. Phys}, 55(3), 1983.
 
 \bibitem{group}
